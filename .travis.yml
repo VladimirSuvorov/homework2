@@ -33,9 +33,9 @@ before_script:
 
 script:
 - CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake .
-- cmake --build .
-- cmake --build . --target test
-- cmake --build . --target package
+- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake --build .
+- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake --build . --target test
+- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake --build . --target package
 
 deploy:
   provider: script
