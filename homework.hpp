@@ -43,7 +43,7 @@ REQUIRES(
     value_type_of<Container>, 
     bai::address_v4>)
         >
-Container filter(Container&& c, uint8_t first_byte){
+Container filter(Container& c, uint8_t first_byte){
     Container r;
     std::remove_copy_if(c.begin(),c.end(),r.begin(),[first_byte](auto &&v){
         return (v.to_bytes()[0]!=first_byte);
@@ -56,7 +56,7 @@ REQUIRES(
     value_type_of<Container>, 
     bai::address_v4>)
         >
-Container filter(Container&& c, uint8_t first_byte, uint8_t second_byte){
+Container filter(Container& c, uint8_t first_byte, uint8_t second_byte){
     Container r;
     std::remove_copy_if(c.begin(),c.end(),r.begin(),[first_byte, second_byte](auto &&v){
         auto ip_bytes = v.to_bytes();
@@ -70,7 +70,7 @@ REQUIRES(
     value_type_of<Container>, 
     bai::address_v4>)
         >
-Container filter_any(Container&& c, uint8_t any_byte){
+Container filter_any(Container& c, uint8_t any_byte){
     Container r;
     std::remove_copy_if(c.begin(),c.end(),r.begin(),[any_byte](auto &&v){
         auto ip_bytes = v.to_bytes();
@@ -86,6 +86,6 @@ Container filter_any(Container&& c, uint8_t any_byte){
 template<typename Container,
 REQUIRES(has_left_shift_output_v<value_type_of<Container>>)
         >
-void output(Container&& c){
+void output(Container& c){
     std::for_each(c.begin(),c.end(),[](auto &&v){ std::cout<<v<<std::endl; });
 }
