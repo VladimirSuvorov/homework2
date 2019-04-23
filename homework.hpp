@@ -10,7 +10,6 @@
 // and dislike to reinvent square wheels, except in educational purposes.
 #include <boost/asio/ip/address_v4.hpp> 
 namespace bai = boost::asio::ip;
-using boost::asio::ip::make_address_v4;
 using ip_pool_t = std::vector<bai::address_v4>;
 
 #include "utils.hpp"
