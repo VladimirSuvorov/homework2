@@ -11,8 +11,15 @@ endif()
 
 
 #Packages
+set (GTEST_ROOT /usr/src/gtest)
+set (GTEST_LIBRARY /usr/src/gtest/libgtest.a)
+set (GTEST_MAIN_LIBRARY /usr/src/gtest/libgtest_main.a)
+
 find_package(Boost REQUIRED)
 find_package(GTest REQUIRED)
+
+find_package(Threads REQUIRED)
+
 include_directories(
     ../include
     ${GTEST_INCLUDE_DIRS}
@@ -32,7 +39,7 @@ add_executable(test_homework test_homework.cpp)
 set_target_properties(ip_filter test_homework PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
-    COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra;-std=c++17"
+    COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra;--std=c++1z"
     INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
 )
 set_target_properties(test_homework PROPERTIES
@@ -41,11 +48,12 @@ set_target_properties(test_homework PROPERTIES
 
 
 #Linking
-target_link_libraries(ip_filter
-    ${Boost_LIBRARIES}
-)
+#target_link_libraries(ip_filter
+#    ${Boost_LIBRARIES}
+#)
 target_link_libraries(test_homework 
     ${GTEST_LIBRARIES}
+    Threads::Threads
 )
 
 
