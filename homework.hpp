@@ -20,7 +20,7 @@ ip_pool_t read_ip4_addresses(std::istream& in=std::cin){
     using namespace std;     
     ip_pool_t ip_pool;
     for(string ip_string; getline(in, ip_string);) 
-        ip_pool.emplace_back(make_address_v4(ip_string));
+        ip_pool.emplace_back(bai::address_v4::from_string(ip_string));
     return ip_pool;
 }
 
