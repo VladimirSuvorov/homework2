@@ -1039,7 +1039,10 @@ TEST_F(HomeworkTest, Input_MUST_be_correct) {
 
 TEST_F(HomeworkTest, test_lexicographical_reverse) { 
     auto ip_pool=read_ip4_addresses(input);
-    auto lexicographically_reversed = reverse_lexicographically_sort(ip_pool);
+    decltype(ip_pool) lexicographically_reversed;
+    reverse_lexicographically_sort(ip_pool);
+    lexicographically_reversed=ip_pool;
+   
     //for this test it is assumed, that read_ip4_addresses is correct
     EXPECT_STREQ(lexicographically_reversed[0].to_string().c_str(),"222.173.235.246");
     EXPECT_STREQ(lexicographically_reversed[1].to_string().c_str(),"222.130.177.64");
