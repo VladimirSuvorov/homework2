@@ -10,16 +10,17 @@
 // and dislike to reinvent square wheels, except in educational purposes.
 #include <boost/asio/ip/address_v4.hpp> 
 namespace bai = boost::asio::ip;
+using boost::asio::ip::make_address_v4;
 using ip_pool_t = std::vector<bai::address_v4>;
 
 #include "utils.hpp"
 
 //reads an ip_v4 addresses to ip_pool as their 
 ip_pool_t read_ip4_addresses(std::istream& in=std::cin){
-    using namespace std; 
+    using namespace std;     
     ip_pool_t ip_pool;
     for(string ip_string; getline(in, ip_string);) 
-        ip_pool.emplace_back(bai::make_address_v4(ip_string));
+        ip_pool.emplace_back(make_address_v4(ip_string));
     return ip_pool;
 }
 
@@ -56,7 +57,7 @@ REQUIRES(
     value_type_of<Container>, 
     bai::address_v4>)
         >
-Container filter(Container&&, uint8_t first_byte, uint8_t second_byte){
+Container filter(Container&& c, uint8_t first_byte, uint8_t second_byte){
     Container r;
     std::remove_copy_if(c.begin(),c.end(),r.begin(),[first_byte, second_byte](auto &&v){
         auto ip_bytes = v.to_bytes();
