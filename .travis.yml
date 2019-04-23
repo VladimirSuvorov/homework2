@@ -1,53 +1,54 @@
 sudo: required
 language: cpp
-distr: xenial
+distr: trusty
  
 
-matrix:
- include:
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-7
-      env:
-        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+addons:
+ apt:
+  sources:
+   - ubuntu-toolchain-r-test
+  packages:
+   - g++-7
+#matrix:
+# include:
+#    - os: linux
+#      addons:
+#        apt:
+#         sources:
+#           - ubuntu-toolchain-r-test
+#         packages:
+#           - g++-7
+#     env:
+#       - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
         
-before_install:
-  # This workaround is required to avoid libstdc++ errors while running "extended" hugo with SASS support.
-  - sudo apt-get -f install
-  - wget -q -O libstdc++6 http://security.ubuntu.com/ubuntu/pool/main/g/gcc-5/libstdc++6_5.4.0-6ubuntu1~16.04.10_amd64.deb
-  - sudo dpkg --force-all -i libstdc++6
-install:
-  - wget -q -O hugo.deb https://github.com/gohugoio/hugo/releases/download/v0.46/hugo_extended_0.46_Linux_64bit.deb
-  - sudo dpkg -i hugo.deb
-  
-before_script:
-- eval "${MATRIX_EVAL}"
-- sudo apt-get install libboost-test-dev -y
+#efore_install:
+# # This workaround is required to avoid libstdc++ errors while running "extended" hugo with SASS support.
+# - sudo apt-get -f install
+# - wget -q -O libstdc++6 http://security.ubuntu.com/ubuntu/pool/main/g/gcc-5/libstdc++6_5.4.0-6ubuntu1~16.04.10_amd64.deb
+# - sudo dpkg --force-all -i libstdc++6
+#nstall:
+# - wget -q -O hugo.deb https://github.com/gohugoio/hugo/releases/download/v0.46/hugo_extended_0.46_Linux_64bit.deb
+# - sudo dpkg -i hugo.deb
+  before_script:
+- sudo apt-get install libboost-all-dev -y
+- sudo apt-get install libgtest-dev -y
+- cd /usr/src/gtest
+- sudo env "PATH=$PATH" cmake .
+#- sudo env "PATH=$PATH" cmake --build . --target install
+- sudo make
+- sudo cp *.a /usr/lib
 - echo "deb http://archive.ubuntu.com/ubuntu xenial main universe" | sudo tee -a /etc/apt/sources.list
 - sudo apt-get update -qq
+- cd $TRAVIS_BUILD_DIR
 
-#- sudo apt-get install libspdlog-dev -y
-- echo "PWD:"
-- echo $PWD
-- echo "TRAVIS_BUILD_DIR:"
-- echo $TRAVIS_BUILD_DIR
-- sudo apt install libgtest-dev cmake -y
-- cd /usr/src/gtest
-- sudo cmake .
-- sudo cmake --build .
-- sudo cp *.a /usr/lib
-- cd ${TRAVIS_BUILD_DIR}
 script:
-- cmake .
+- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake .
 - cmake --build .
 - cmake --build . --target test
 - cmake --build . --target package
+
 deploy:
   provider: script
   skip_cleanup: true
-  script: 
+  script:
   - curl -T ip_filter-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -uvladimirsuvorov:$BINTRAY_API_KEY "https://api.bintray.com/content/vladimirsuvorov/otus-cpp/ip_filter/$TRAVIS_BUILD_NUMBER/ip_filter-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
