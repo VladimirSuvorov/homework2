@@ -1008,7 +1008,7 @@ R"(113.162.145.156	111	0
 93.179.90.82	74	0
 )";
 
-class HomeworkTest: public ::testing::test { 
+class HomeworkTest: public ::testing::Test { 
 public: 
    void SetUp() { 
        input<<input_text;
