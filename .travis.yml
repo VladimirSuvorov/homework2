@@ -1,7 +1,7 @@
 sudo: required
 language: 
  - cpp
-dist: trusty
+dist: xenial
 
 addons:
  apt:
