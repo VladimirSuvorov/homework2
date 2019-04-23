@@ -1032,8 +1032,8 @@ TEST_F(HomeworkTest, Input_MUST_be_correct) {
     ASSERT_STREQ(ip_pool[1].to_string().c_str(),"157.39.22.224");
     ASSERT_STREQ(ip_pool[2].to_string().c_str(),"79.180.73.190");
 
-    ASSERT_STREQ(ip_pool[(ip_pool.size()-3].to_string().c_str(),"67.183.105.87");
-    ASSERT_STREQ(ip_pool[(ip_pool.size()-2].to_string().c_str(),"91.64.189.196");
+    ASSERT_STREQ(ip_pool[(ip_pool.size()-3)].to_string().c_str(),"67.183.105.87");
+    ASSERT_STREQ(ip_pool[(ip_pool.size()-2)].to_string().c_str(),"91.64.189.196");
     ASSERT_STREQ(ip_pool[(ip_pool.size()-1)].to_string().c_str(),"93.179.90.82");
 }
 
@@ -1044,8 +1044,8 @@ TEST_F(HomeworkTest, test_lexicographical_reverse) {
     EXPECT_STREQ(lexicographically_reversed[1].to_string().c_str(),"222.130.177.64");
     EXPECT_STREQ(lexicographically_reversed[2].to_string().c_str(),"222.82.198.61");
     
-    EXPECT_STREQ(ip_pool[(ip_pool.size()-3].to_string().c_str(),"1.70.44.170");
-    EXPECT_STREQ(ip_pool[(ip_pool.size()-2].to_string().c_str(),"1.29.168.152");
+    EXPECT_STREQ(ip_pool[(ip_pool.size()-3)].to_string().c_str(),"1.70.44.170");
+    EXPECT_STREQ(ip_pool[(ip_pool.size()-2)].to_string().c_str(),"1.29.168.152");
     EXPECT_STREQ(ip_pool[(ip_pool.size()-1)].to_string().c_str(),"1.1.234.8");    
 }
 
@@ -1075,8 +1075,8 @@ TEST_F(HomeworkTest, test_filtration_by_any_byte) {
     EXPECT_STREQ(lexicographically_reversed[1].to_string().c_str(),"186.46.222.194");
     EXPECT_STREQ(lexicographically_reversed[2].to_string().c_str(),"185.46.87.231");
     
-    EXPECT_STREQ(ip_pool[(ip_pool.size()-3].to_string().c_str(),"46.49.43.85");
-    EXPECT_STREQ(ip_pool[(ip_pool.size()-2].to_string().c_str(),"39.46.86.85");
+    EXPECT_STREQ(ip_pool[(ip_pool.size()-3)].to_string().c_str(),"46.49.43.85");
+    EXPECT_STREQ(ip_pool[(ip_pool.size()-2)].to_string().c_str(),"39.46.86.85");
     EXPECT_STREQ(ip_pool[(ip_pool.size()-1)].to_string().c_str(),"5.189.203.46");
 }
 
