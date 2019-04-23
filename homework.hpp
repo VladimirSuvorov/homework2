@@ -8,14 +8,14 @@
 //This task is definitely can be simplified with an ip-address datatype.
 //And I'am too lazy to implement such datatype myself, espicially cos I know about following header
 // and dislike to reinvent square wheels, except in educational purposes.
-#include <boost/asio/ip/address.hpp> 
+#include <boost/asio/ip/address_v4.hpp> 
 namespace bai = boost::asio::ip;
 using ip_pool_t = std::vector<bai::address_v4>;
 
 #include "utils.hpp"
 
 //reads an ip_v4 addresses to ip_pool as their 
-ip_pool_t read_ip4_addresses(std::istream& in=cin){
+ip_pool_t read_ip4_addresses(std::istream& in=std::cin){
     using namespace std; 
     ip_pool_t ip_pool;
     for(string ip_string; getline(in, ip_string);) 
