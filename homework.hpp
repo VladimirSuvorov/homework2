@@ -31,7 +31,7 @@ template<typename Container,
 REQUIRES(has_greater_predicate_v<value_type_of<Container>>)
         >
 void reverse_lexicographically_sort(Container& c){
-    std::sort(c.begin(), c.end(), std::greater<value_type_of<Container>>);    
+    std::sort(c.begin(), c.end(), std::greater<value_type_of<Container>>());    
 }
 
 //Any filter## function:
