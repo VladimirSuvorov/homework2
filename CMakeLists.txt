@@ -41,7 +41,9 @@ set_target_properties(test_homework PROPERTIES
 
 
 #Linking
-target_link_libraries(ip_filter)
+target_link_libraries(ip_filter
+    ${Boost_LIBRARIES}
+)
 target_link_libraries(test_homework 
     ${GTEST_LIBRARIES}
 )
