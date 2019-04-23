@@ -1,5 +1,6 @@
 sudo: required
 language: cpp
+distr: xenial
  
 
 matrix:
