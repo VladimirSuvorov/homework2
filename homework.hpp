@@ -57,7 +57,7 @@ Container filter_any(const WithValueOfType<Container,bai::address_v4>& c, uint8_
     Container r;
     std::remove_copy_if(std::cbegin(c), std::cend(c),std::begin(r),[any_byte](auto &&v){
         auto ip_bytes = v.to_bytes();
-        for(auto byte_index=0; byte_index<ip_bytes.size(); ++byte_index)
+        for(size_t byte_index=0; byte_index<ip_bytes.size(); ++byte_index)
             if(ip_bytes[byte_index]==any_byte)return false;
         return true;
     });
