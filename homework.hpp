@@ -68,5 +68,5 @@ Container filter_any(const WithValueOfType<Container,bai::address_v4>& c, uint8_
 // with value_type having stream output operator<< overload 
 template<typename Container>
 void output(WithValueHavingLeftShiftOutput<Container>&& c, std::ostream& out=std::cout){
-    std::for_each(std::cbegin(c), std::cend(c),[](auto &&v){ out<<v<<std::endl; });
+    std::for_each(std::cbegin(c), std::cend(c),[&out](auto &&v){ out<<v<<std::endl; });
 }
