@@ -39,7 +39,7 @@ add_executable(test_homework test_homework.cpp)
 set_target_properties(ip_filter test_homework PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
-    COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra;--std=c++17;-DBOOST_SYSTEM_NO_DEPRECATED "
+    COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra;--std=c++17;"
     INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
 )
 set_target_properties(test_homework PROPERTIES
