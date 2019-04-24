@@ -40,7 +40,7 @@ add_executable(test_homework test_homework.cpp)
 set_target_properties(ip_filter test_homework PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
-    COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra;--std=c++17;"
+    COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra;--std=c++17;-lboost_system;"
     INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
 )
 set_target_properties(test_homework PROPERTIES
@@ -52,14 +52,15 @@ set_target_properties(test_homework PROPERTIES
 target_link_libraries(ip_filter
     ${Boost_LIBRARIES}
 )
-target_link_libraries(test_homework 
+target_link_libraries(test_homework
+    ${Boost_LIBRARIES}
     ${GTEST_LIBRARIES}
     Threads::Threads
 )
 
-
-#CPack
+#Install
 install(TARGETS ip_filter RUNTIME DESTINATION bin)
+#CPack
 set(CPACK_GENERATOR DEB)
 set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
