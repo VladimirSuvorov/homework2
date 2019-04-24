@@ -27,23 +27,16 @@ ip_pool_t read_ip4_addresses(std::istream& in=std::cin){
 
 //Applies any STL-compatible container, 
 // with value_type having greater comparsion operator>
-template<typename Container,
-REQUIRES(has_greater_predicate_v<value_type_of<Container>>)
-        >
-void reverse_lexicographically_sort(Container& c){
+template<typename Container>
+void reverse_lexicographically_sort(WithValueSupportingGreatherPredicate<Container>& c){
     std::sort(std::begin(c), std::end(c), std::greater<value_type_of<Container>>());    
 }
 
 //Any filter## function:
 //1) applies any STL-compatible container, with boost::asio::ip::address_v4 as value_type
 //2) returns a copy of an input container, filled with filtered IPs
-template<typename Container, 
-REQUIRES(
-    std::is_same_v<
-    value_type_of<Container>, 
-    bai::address_v4>)
-        >
-Container filter(const Container& c, uint8_t first_byte){
+template<typename Container>
+Container filter(const WithValueOfType<Container,bai::address_v4>& c, uint8_t first_byte){
     Container r;
     std::remove_copy_if(std::cbegin(c), std::cend(c),std::begin(r),[first_byte](auto &&v){
         return (v.to_bytes()[0]!=first_byte);
@@ -56,7 +49,7 @@ REQUIRES(
     value_type_of<Container>, 
     bai::address_v4>)
         >
-Container filter(const Container& c, uint8_t first_byte, uint8_t second_byte){
+Container filter(const WithValueOfType<Container,bai::address_v4>& c, uint8_t first_byte, uint8_t second_byte){
     Container r;
     std::remove_copy_if(std::cbegin(c), std::cend(c),std::begin(r),[first_byte, second_byte](auto &&v){
         auto ip_bytes = v.to_bytes();
@@ -64,13 +57,8 @@ Container filter(const Container& c, uint8_t first_byte, uint8_t second_byte){
     });
     return r;    
 }
-template<typename Container, 
-REQUIRES(
-    std::is_same_v<
-    value_type_of<Container>, 
-    bai::address_v4>)
-        >
-Container filter_any(const Container& c, uint8_t any_byte){
+template<typename Container>
+Container filter_any(const WithValueOfType<Container,bai::address_v4>& c, uint8_t any_byte){
     Container r;
     std::remove_copy_if(std::cbegin(c), std::cend(c),std::begin(r),[any_byte](auto &&v){
         auto ip_bytes = v.to_bytes();
@@ -83,9 +71,7 @@ Container filter_any(const Container& c, uint8_t any_byte){
 
 //Applies any STL-compatible container,
 // with value_type having stream output operator<< overload 
-template<typename Container,
-REQUIRES(has_left_shift_output_v<value_type_of<Container>>)
-        >
-void output(Container&& c){
-    std::for_each(std::cbegin(c), std::cend(c),[](auto &&v){ std::cout<<v<<std::endl; });
+template<typename Container>
+void output(WithValueHavingLeftShiftOutput<Container>&& c, std::ostream& out=std::cout){
+    std::for_each(std::cbegin(c), std::cend(c),[](auto &&v){ out<<v<<std::endl; });
 }
