@@ -11,9 +11,9 @@ version="0.0.$1"
 package="${name}_${version}_amd64.deb"
 params=';deb_distribution=xenial;deb_component=main;deb_architecture=amd64;publish=1'
 
-echo "$package"
-echo "${user}:$2"
-echo "$baseurl/$user/$project/$name/$version/$package$params"
+#echo "$package"
+#echo "${user}:$2"
+#echo "$baseurl/$user/$project/$name/$version/$package$params"
 
 
 #https://api.bintray.com/content/
@@ -26,7 +26,10 @@ echo "$baseurl/$user/$project/$name/$version/$package$params"
 #if_filter_0.0.60_amd64.deb;
 #deb_distribution=xenial;deb_component=main;deb_architecture=amd64;publish=1
 #"$baseurl/$user/$project/$name/$version/pool/main/${name::1}/$name/$package$params"
-curl -T "$package" -u "${user}:$2" "$baseurl/$user/$project/$name/$version/$package$params"
+
+curl -T helloworld-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -uvladimirsuvorov:$BINTRAY_API_KEY "https://api.bintray.com/content/vladimirsuvorov/otus-cpp/if_filter/$TRAVIS_BUILD_NUMBER/if_filter-0.0.$TRAVIS_BUILD_NUMBER-amd64.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
+
+#curl -T "$package" -u "${user}:$2" "$baseurl/$user/$project/$name/$version/$package$params"
 
 #curl -T helloworld-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -uvladimirsuvorov:$BINTRAY_API_KEY 
 #"https://api.bintray.com/content/
