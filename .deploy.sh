@@ -4,7 +4,7 @@
 # $2 - BINTRAY_API_KEY
 
 baseurl='https://api.bintray.com/content'
-user='vsuvorov'
+user='vladimirsuvorov'
 project='otus-cpp'
 name='if_filter'
 version="0.0.$1"
@@ -13,10 +13,20 @@ params=';deb_distribution=xenial;deb_component=main;deb_architecture=amd64;publi
 
 echo "$package"
 echo "${user}:$2"
-echo "$baseurl/$user/$project/$name/$version/pool/main/${name::1}/$name/$package$params"
+echo "$baseurl/$user/$project/$name/$version/$package$params"
 
 
-curl -T "$package" -u "${user}:$2" "$baseurl/$user/$project/$name/$version/pool/main/${name::1}/$name/$package$params"
+#https://api.bintray.com/content/
+#vsuvorov/
+#otus-cpp/
+#if_filter/0.0.60/
+
+#pool/main/i/if_filter/
+
+#if_filter_0.0.60_amd64.deb;
+#deb_distribution=xenial;deb_component=main;deb_architecture=amd64;publish=1
+#"$baseurl/$user/$project/$name/$version/pool/main/${name::1}/$name/$package$params"
+curl -T "$package" -u "${user}:$2" "$baseurl/$user/$project/$name/$version/$package$params"
 
 #curl -T helloworld-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -uvladimirsuvorov:$BINTRAY_API_KEY 
 #"https://api.bintray.com/content/
