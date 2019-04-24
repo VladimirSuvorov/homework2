@@ -16,7 +16,7 @@ set (GTEST_LIBRARY /usr/src/gtest/libgtest.a)
 set (GTEST_MAIN_LIBRARY /usr/src/gtest/libgtest_main.a)
 
 find_package(Boost REQUIRED)
-find_package(Boost COMPONENTS system)
+find_package(Boost COMPONENTS system REQUIRED)
 find_package(GTest REQUIRED)
 
 find_package(Threads REQUIRED)
