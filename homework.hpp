@@ -43,12 +43,7 @@ Container filter(const WithValueOfType<Container,bai::address_v4>& c, uint8_t fi
     });
     return r;
 }
-template<typename Container, 
-REQUIRES(
-    std::is_same_v<
-    value_type_of<Container>, 
-    bai::address_v4>)
-        >
+template<typename Container>
 Container filter(const WithValueOfType<Container,bai::address_v4>& c, uint8_t first_byte, uint8_t second_byte){
     Container r;
     std::remove_copy_if(std::cbegin(c), std::cend(c),std::begin(r),[first_byte, second_byte](auto &&v){
