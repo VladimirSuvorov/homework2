@@ -1,48 +1,34 @@
-sudo: required
-language: 
- - cpp
-dist: trusty
-
-matrix:
-  include:
-    # works on Precise and Trusty
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-7
-      env:
-        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
-
+language: cpp
+dist: xenial
+addons:
+  apt:
+    update: true
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-8
+      - libgtest-dev
+      - libboost-all-dev
+      - build-essential
+      - cmake
 before_install:
-    - eval "${MATRIX_EVAL}"
-
+- export CC=gcc-8
+- export CXX=g++-8
 before_script:
-- echo "deb http://archive.ubuntu.com/ubuntu xenial main universe" | sudo tee -a /etc/apt/sources.list
-- sudo apt-get update -qq
-
-- sudo apt-get install libboost-all-dev -y
-- echo "PWD:"
-- echo $PWD
-- echo "TRAVIS_BUILD_DIR:"
-- echo $TRAVIS_BUILD_DIR
-- sudo apt install libgtest-dev cmake -y
-- cd /usr/src/gtest
-- sudo CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake .
-- sudo CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake --build .
+- pushd /usr/src/gtest
+- sudo cmake .
+- sudo cmake --build . -- -j "`nproc`"
 - sudo cp *.a /usr/lib
-- cd ${TRAVIS_BUILD_DIR}
-
+- popd
 script:
-- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake .
-- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake --build .
-- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake --build . --target test
-- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake --build . --target package
-
+- cmake -D BUILD_TYPE_RELEASE=ON .
+- cmake --build . -- -j "`nproc`"
+- cmake --build . --target test -- -j "`nproc`"
+- cmake --build . --target package -- -j "`nproc`"
 deploy:
-  provider: script
-  skip_cleanup: true
-  script:
-  - curl -T ip_filter-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -uvladimirsuvorov:$BINTRAY_API_KEY "https://api.bintray.com/content/vladimirsuvorov/otus-cpp/ip_filter/$TRAVIS_BUILD_NUMBER/ip_filter-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
+  - provider: script
+    skip_cleanup: true
+    debug: on
+    script: bash .deploy.sh "$TRAVIS_BUILD_NUMBER" "$BINTRAY_API_KEY"
+    on:
+      branch: master
