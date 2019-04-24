@@ -86,6 +86,6 @@ Container filter_any(Container& c, uint8_t any_byte){
 template<typename Container,
 REQUIRES(has_left_shift_output_v<value_type_of<Container>>)
         >
-void output(Container& c){
+void output(Container&& c){
     std::for_each(std::begin(c), std::end(c),[](auto &&v){ std::cout<<v<<std::endl; });
 }
