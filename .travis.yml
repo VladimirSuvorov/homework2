@@ -29,6 +29,7 @@ deploy:
     provider: script
     skip_cleanup: true
     debug: on
-    script: bash .deploy.sh "$TRAVIS_BUILD_NUMBER" "$BINTRAY_API_KEY"
+    script: 
+    - curl -T if_filter-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -uvladimirsuvorov:$BINTRAY_API_KEY "https://api.bintray.com/content/vladimirsuvorov/otus-cpp/if_filter/$TRAVIS_BUILD_NUMBER/if_filter-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=xenial;deb_component=main;deb_architecture=amd64;publish=1"
     on:
       branch: master
