@@ -3,5 +3,5 @@
 
 https://travis-ci.org/VladimirSuvorov/homework2/builds
 
-https://bintray.com/vladimirsuvorov/otus-cpp/helloworld
+https://bintray.com/vladimirsuvorov/otus-cpp/ip_filter
 
