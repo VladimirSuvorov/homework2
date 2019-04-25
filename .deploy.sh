@@ -27,7 +27,7 @@ params=';deb_distribution=xenial;deb_component=main;deb_architecture=amd64;publi
 #deb_distribution=xenial;deb_component=main;deb_architecture=amd64;publish=1
 #"$baseurl/$user/$project/$name/$version/pool/main/${name::1}/$name/$package$params"
 
-curl -T "$package" -uvladimirsuvorov:$BINTRAY_API_KEY "https://api.bintray.com/content/vladimirsuvorov/otus-cpp/if_filter/$TRAVIS_BUILD_NUMBER/$package;deb_distribution=xenial;deb_component=main;deb_architecture=amd64;publish=1"
+curl -T if_filter-0.0."$1"_amd64.deb -uvladimirsuvorov:$2 "https://api.bintray.com/content/vladimirsuvorov/otus-cpp/if_filter/$1/if_filter-0.0."$1"_amd64.deb;deb_distribution=xenial;deb_component=main;deb_architecture=amd64;publish=1"
 
 #curl -T "$package" -u "${user}:$2" "$baseurl/$user/$project/$name/$version/$package$params"
 
