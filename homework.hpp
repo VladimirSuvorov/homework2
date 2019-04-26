@@ -49,11 +49,6 @@ Container filter(const WithValueOfType<Container,bai::address_v4>& c, uint8_t fi
     return filter_implementation(c, [first_byte](auto &&v){
         return (v.to_bytes()[0]!=first_byte);
     });
-    /*Container r;
-    std::remove_copy_if(std::cbegin(c), std::cend(c),std::begin(r),[first_byte](auto &&v){
-        return (v.to_bytes()[0]!=first_byte);
-    });
-    return r;*/
 }
 template<typename Container>
 Container filter(const WithValueOfType<Container,bai::address_v4>& c, uint8_t first_byte, uint8_t second_byte){
@@ -61,29 +56,17 @@ Container filter(const WithValueOfType<Container,bai::address_v4>& c, uint8_t fi
         auto ip_bytes = v.to_bytes();
         return ((ip_bytes[0]!=first_byte)||(ip_bytes[1]!=second_byte));
     });
-    /*Container r;
-    std::remove_copy_if(std::cbegin(c), std::cend(c),std::begin(r),[first_byte, second_byte](auto &&v){
-        auto ip_bytes = v.to_bytes();
-        return ((ip_bytes[0]!=first_byte)||(ip_bytes[1]!=second_byte));
-    });
-    return r;*/    
 }
 template<typename Container>
 Container filter_any(const WithValueOfType<Container,bai::address_v4>& c, uint8_t any_byte){
     return filter_implementation(c, [any_byte](auto &&v){
         auto ip_bytes = v.to_bytes();
-        for(size_t byte_index=0; byte_index<ip_bytes.size(); ++byte_index)
+        //result = false if found, true - otherwise
+        return (std::cend(ip_bytes)==std::find(std::cbegin(ip_bytes), std::cend(ip_bytes), any_byte));
+        /*for(size_t byte_index=0; byte_index<ip_bytes.size(); ++byte_index)
             if(ip_bytes[byte_index]==any_byte)return false;
-        return true;
+        return true;*/
     });
-    /*Container r;
-    std::remove_copy_if(std::cbegin(c), std::cend(c),std::begin(r),[any_byte](auto &&v){
-        auto ip_bytes = v.to_bytes();
-        for(size_t byte_index=0; byte_index<ip_bytes.size(); ++byte_index)
-            if(ip_bytes[byte_index]==any_byte)return false;
-        return true;
-    });
-    return r;*/    
 }
 
 //Applies any STL-compatible container,
