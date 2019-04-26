@@ -14,12 +14,12 @@ using ip_pool_t = std::vector<bai::address_v4>;
 
 #include "utils.hpp"
 
-//reads an ip_v4 addresses to ip_pool as their 
+//reads an ip_v4 addresses from an std::istream to ip_pool as their string representation;
 ip_pool_t read_ip4_addresses(std::istream& in=std::cin){
     using namespace std;     
     ip_pool_t ip_pool;
     for(string ip_string; getline(in, ip_string);) 
-        ip_pool.emplace_back(bai::address_v4::from_string(ip_string));
+        ip_pool.emplace_back(std::move(bai::address_v4::from_string(strtok(ip_string.c_str()," \t\n"))));
     return ip_pool;
 }
 
