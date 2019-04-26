@@ -39,7 +39,7 @@ namespace{
     template<typename Container, typename UnaryPredicate>
     Container filter_implementation(const Container& c, UnaryPredicate unary_predicate){
         Container r;//NOTE: unary_predicate is inverted in the lambda, cos we need to invert the condition we're looking for due to use of remove_copy_if's result. 
-        std::remove_copy_if(std::cbegin(c), std::cend(c), std::begin(r), [](auto&& v){
+        std::remove_copy_if(std::cbegin(c), std::cend(c), std::begin(r), [unary_predicate](auto&& v){
             return (!unary_predicate(std::forward<decltype(v)>(v)));
         });
         return r;
