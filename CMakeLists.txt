@@ -35,6 +35,7 @@ add_executable(ip_filter main.cpp)
 #add_executable(test_homework test_homework.cpp)
 
 add_executable(input_test input_test.cpp)
+add_executable(lexicographical_reverse lexicographical_reverse.cpp)
 add_executable(filtration_by_first_byte_test filtration_by_first_byte.cpp)
 add_executable(filtration_by_first_and_second_bytes_test filtration_by_first_and_second_bytes.cpp)
 add_executable(filtration_by_any_byte_test filtration_by_any_byte.cpp)
@@ -44,6 +45,7 @@ add_executable(filtration_by_any_byte_test filtration_by_any_byte.cpp)
 #Compilation setings
 set_target_properties(ip_filter 
   input_test 
+  lexicographical_reverse
   filtration_by_first_byte_test 
   filtration_by_first_and_second_bytes_test
   filtration_by_any_byte_test
@@ -55,6 +57,7 @@ PROPERTIES
 )
 set_target_properties(
   input_test 
+  lexicographical_reverse
   filtration_by_first_byte_test 
   filtration_by_first_and_second_bytes_test
   filtration_by_any_byte_test
@@ -70,6 +73,11 @@ target_link_libraries(ip_filter
 
 
 target_link_libraries(input_test
+    ${Boost_LIBRARIES}
+    ${GTEST_LIBRARIES}
+    Threads::Threads
+)
+target_link_libraries(lexicographical_reverse
     ${Boost_LIBRARIES}
     ${GTEST_LIBRARIES}
     Threads::Threads
@@ -119,6 +127,7 @@ include(CPack)
 #Testing
 enable_testing()
 add_test(input_test input_test)
+add_test(lexicographical_reverse lexicographical_reverse)
 add_test(filtration_by_first_byte_test filtration_by_first_byte_test)
 add_test(filtration_by_first_and_second_bytes_test filtration_by_first_and_second_bytes_test)
 add_test(filtration_by_any_byte_test filtration_by_any_byte_test)
