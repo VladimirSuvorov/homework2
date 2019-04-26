@@ -64,7 +64,12 @@ Container filter_any(const WithValueOfType<Container,bai::address_v4>& ip_addres
     return filter_implementation(ip_addresses_container, [any_byte](auto &&ip_address){        
         using namespace std;
         auto ip_bytes = ip_address.to_bytes();
-        return (cend(ip_bytes)!=find(cbegin(ip_bytes), cend(ip_bytes), any_byte));
+        return ((ip_bytes[0]==any_byte)||
+                (ip_bytes[1]==any_byte)||
+                (ip_bytes[2]==any_byte)||
+                (ip_bytes[3]==any_byte));
+        
+        //return (cend(ip_bytes)!=find(cbegin(ip_bytes), cend(ip_bytes), any_byte));
     });
 }
 
