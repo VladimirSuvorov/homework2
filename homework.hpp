@@ -33,40 +33,62 @@ void reverse_lexicographically_sort(WithValueSupportingGreatherPredicate<Contain
 }
 
 //Any filter## function:
-//1) applies any STL-compatible container, with boost::asio::ip::address_v4 as value_type
+//1) applies any STL-compatible container, with boost::asio::ip::address_v4 as a value_type
 //2) returns a copy of an input container, filled with filtered IPs
+namespace{
+    template<typename Container, typename UnaryPredicate>
+    Container filter_implementation(const Container& c, UnaryPredicate unary_predicate){
+        Container r;
+        std::remove_copy_if(std::cbegin(c), std::cend(c), std::begin(r), unary_predicate);
+        return r;
+    }
+}
+
 template<typename Container>
 Container filter(const WithValueOfType<Container,bai::address_v4>& c, uint8_t first_byte){
-    Container r;
+    return filter_implementation(c, [first_byte](auto &&v){
+        return (v.to_bytes()[0]!=first_byte);
+    });
+    /*Container r;
     std::remove_copy_if(std::cbegin(c), std::cend(c),std::begin(r),[first_byte](auto &&v){
         return (v.to_bytes()[0]!=first_byte);
     });
-    return r;
+    return r;*/
 }
 template<typename Container>
 Container filter(const WithValueOfType<Container,bai::address_v4>& c, uint8_t first_byte, uint8_t second_byte){
-    Container r;
+    return filter_implementation(c, [first_byte, second_byte](auto &&v){
+        auto ip_bytes = v.to_bytes();
+        return ((ip_bytes[0]!=first_byte)||(ip_bytes[1]!=second_byte));
+    });
+    /*Container r;
     std::remove_copy_if(std::cbegin(c), std::cend(c),std::begin(r),[first_byte, second_byte](auto &&v){
         auto ip_bytes = v.to_bytes();
         return ((ip_bytes[0]!=first_byte)||(ip_bytes[1]!=second_byte));
     });
-    return r;    
+    return r;*/    
 }
 template<typename Container>
 Container filter_any(const WithValueOfType<Container,bai::address_v4>& c, uint8_t any_byte){
-    Container r;
+    return filter_implementation(c, [any_byte](auto &&v){
+        auto ip_bytes = v.to_bytes();
+        for(size_t byte_index=0; byte_index<ip_bytes.size(); ++byte_index)
+            if(ip_bytes[byte_index]==any_byte)return false;
+        return true;
+    });
+    /*Container r;
     std::remove_copy_if(std::cbegin(c), std::cend(c),std::begin(r),[any_byte](auto &&v){
         auto ip_bytes = v.to_bytes();
         for(size_t byte_index=0; byte_index<ip_bytes.size(); ++byte_index)
             if(ip_bytes[byte_index]==any_byte)return false;
         return true;
     });
-    return r;    
+    return r;*/    
 }
 
 //Applies any STL-compatible container,
 // with value_type having stream output operator<< overload 
 template<typename Container>
 void output(WithValueHavingLeftShiftOutput<Container>&& c, std::ostream& out=std::cout){
-    std::for_each(std::cbegin(c), std::cend(c),[&out](auto &&v){ out<<v<<std::endl; });
+    std::for_each(std::cbegin(c), std::cend(c), [&out](auto &&v){ out<<v<<std::endl; });
 }
