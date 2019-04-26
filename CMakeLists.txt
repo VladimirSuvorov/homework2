@@ -32,13 +32,12 @@ include_directories(
 #Targets
 add_executable(ip_filter main.cpp)
 #add_library(static_library lib.cpp)
-#add_executable(test_homework test_homework.cpp)
 
 add_executable(input_test input_test.cpp)
-add_executable(lexicographical_reverse lexicographical_reverse.cpp)
-add_executable(filtration_by_first_byte_test filtration_by_first_byte.cpp)
-add_executable(filtration_by_first_and_second_bytes_test filtration_by_first_and_second_bytes.cpp)
-add_executable(filtration_by_any_byte_test filtration_by_any_byte.cpp)
+add_executable(lexicographical_reverse_test lexicographical_reverse_test.cpp)
+add_executable(filtration_by_first_byte_test filtration_by_first_byte_test.cpp)
+add_executable(filtration_by_first_and_second_bytes_test filtration_by_first_and_second_bytes_test.cpp)
+add_executable(filtration_by_any_byte_test filtration_by_any_byte_test.cpp)
 
 
 
