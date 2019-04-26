@@ -2,8 +2,8 @@
 
 TEST_F(HomeworkTest, test_filtration_by_any_byte) {    
     auto ip_pool=read_ip4_addresses(input);
-    reverse_lexicographically_sort(ip_pool);
     auto filtered_by_any_byte = filter_any(ip_pool, 46);
+    reverse_lexicographically_sort(filtered_by_any_byte);
     
     ASSERT_EQ(filtered_by_any_byte.size(), 34);
     
