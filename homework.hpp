@@ -1,10 +1,8 @@
-
 #include <iostream>
 #include <string>
 #include <vector>
-
 #include <algorithm>
-#include <functional>
+#include <iterator>
 //This task is definitely can be simplified with an ip-address datatype.
 //And I'am too lazy to implement such datatype myself, espicially cos I know about following header
 // and dislike to reinvent square wheels, except in educational purposes.
@@ -37,7 +35,7 @@ namespace{//filter function family implementation detatils
     Container filter_implementation(const Container& ip_addresses_container, UnaryPredicate unary_predicate){
         using namespace std;
         Container result_ip_addresses_container; 
-        remove_copy_if(cbegin(ip_addresses_container), cend(ip_addresses_container), begin(result_ip_addresses_container), 
+        remove_copy_if(cbegin(ip_addresses_container), cend(ip_addresses_container), back_inserter(result_ip_addresses_container), 
         [&unary_predicate](auto&& ip_address){
             return (!unary_predicate(forward<remove_reference_t<decltype(ip_address)>>(ip_address)));
         });
