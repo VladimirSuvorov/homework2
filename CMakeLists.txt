@@ -56,7 +56,7 @@ PROPERTIES
 )
 set_target_properties(
   input_test 
-  lexicographical_reverse
+  lexicographical_reverse_test
   filtration_by_first_byte_test 
   filtration_by_first_and_second_bytes_test
   filtration_by_any_byte_test
