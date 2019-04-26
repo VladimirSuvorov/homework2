@@ -70,7 +70,7 @@ Container filter_any(const WithValueOfType<Container,bai::address_v4>& ip_addres
     });
 }
 
-//Applies any STL-compatible container, with a value_type having stream output operator<< overload 
+//Applies any STL-compatible container, with a value_type having a stream output operator<< overload 
 template<typename Container>
 void output(WithValueHavingLeftShiftOutput<Container>&& ip_addresses_container, std::ostream& out=std::cout){
     using namespace std;
