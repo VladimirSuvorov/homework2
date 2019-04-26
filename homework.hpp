@@ -38,8 +38,8 @@ void reverse_lexicographically_sort(WithValueSupportingGreatherPredicate<Contain
 namespace{
     template<typename Container, typename UnaryPredicate>
     Container filter_implementation(const Container& c, UnaryPredicate unary_predicate){
-        Container r;
-        std::remove_copy_if(std::cbegin(c), std::cend(c), std::begin(r), unary_predicate);
+        Container r;//NOTE: unary_predicate is inverted in the lambda, cos we need to invert the condition we're looking for due to use of remove_copy_if's result. 
+        std::remove_copy_if(std::cbegin(c), std::cend(c), std::begin(r), [](auto&& v){return (!unary_predicate(v));});
         return r;
     }
 }
@@ -47,25 +47,21 @@ namespace{
 template<typename Container>
 Container filter(const WithValueOfType<Container,bai::address_v4>& c, uint8_t first_byte){
     return filter_implementation(c, [first_byte](auto &&v){
-        return (v.to_bytes()[0]!=first_byte);
+        return (v.to_bytes()[0]==first_byte);
     });
 }
 template<typename Container>
 Container filter(const WithValueOfType<Container,bai::address_v4>& c, uint8_t first_byte, uint8_t second_byte){
     return filter_implementation(c, [first_byte, second_byte](auto &&v){
         auto ip_bytes = v.to_bytes();
-        return ((ip_bytes[0]!=first_byte)||(ip_bytes[1]!=second_byte));
+        return ((ip_bytes[0]==first_byte)&&(ip_bytes[1]==second_byte));
     });
 }
 template<typename Container>
 Container filter_any(const WithValueOfType<Container,bai::address_v4>& c, uint8_t any_byte){
     return filter_implementation(c, [any_byte](auto &&v){
         auto ip_bytes = v.to_bytes();
-        //result = false if found, true - otherwise
-        return (std::cend(ip_bytes)==std::find(std::cbegin(ip_bytes), std::cend(ip_bytes), any_byte));
-        /*for(size_t byte_index=0; byte_index<ip_bytes.size(); ++byte_index)
-            if(ip_bytes[byte_index]==any_byte)return false;
-        return true;*/
+        return (std::cend(ip_bytes)!=std::find(std::cbegin(ip_bytes), std::cend(ip_bytes), any_byte));
     });
 }
 
