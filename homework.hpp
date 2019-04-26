@@ -18,8 +18,8 @@ using ip_pool_t = std::vector<bai::address_v4>;
 ip_pool_t read_ip4_addresses(std::istream& in=std::cin){
     using namespace std;     
     ip_pool_t ip_pool;
-    for(string ip_string; getline(in, ip_string);) 
-        ip_pool.emplace_back(std::move(bai::address_v4::from_string(strtok(ip_string.c_str()," \t\n"))));
+    for(string ip_string; getline(in, ip_string);) //unsafe const_cast for this case, BUT! - it workes fine/
+        ip_pool.emplace_back(std::move(bai::address_v4::from_string(ip_string.substr(0,ip_string.find_first_of(" \t\n")))));
     return ip_pool;
 }
 
